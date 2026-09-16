@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import NotificationToast from '../components/NotificationToast';
 import { useJobs } from '../hooks/useJobs';
-import { X, Plus, Sparkles } from 'lucide-react';
+import { X, Plus } from 'lucide-react';
 
 export default function Dashboard() {
   const {
@@ -51,23 +51,6 @@ export default function Dashboard() {
     });
   }, [jobs, searchQuery, activeStatus, activeType]);
 
-  const handleSeedJobs = async () => {
-    const sampleJobs = [
-      { title: 'Process Monthly Invoices', type: 'DOCUMENT_PROCESSING' },
-      { title: 'Send Welcome Email Campaign', type: 'EMAIL_NOTIFICATION' },
-      { title: 'Export User Analytics CSV', type: 'DATA_EXPORT' },
-      { title: 'Compress Product Images', type: 'IMAGE_OPTIMIZATION' },
-    ];
-
-    try {
-      for (const j of sampleJobs) {
-        await createJob(j);
-      }
-    } catch (err) {
-      // Handled in useJobs hook
-    }
-  };
-
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
       {/* Header */}
@@ -91,7 +74,7 @@ export default function Dashboard() {
               </h2>
             </div>
 
-            {/* Interactive Status Summary Pills */}
+            {/* Status Summary Pills */}
             <StatusSummary
               counts={counts}
               activeFilter={activeStatus}
@@ -118,25 +101,11 @@ export default function Dashboard() {
         {loading ? (
           <Loading />
         ) : (
-          <>
-            {jobs.length === 0 && (
-              <div className="mb-4 text-center">
-                <button
-                  onClick={handleSeedJobs}
-                  className="inline-flex items-center space-x-1.5 text-xs font-medium text-blue-400 hover:text-blue-300 bg-blue-950/40 hover:bg-blue-900/40 border border-blue-800/40 px-3.5 py-2 rounded-lg transition"
-                >
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Seed Demo Jobs</span>
-                </button>
-              </div>
-            )}
-
-            <JobTable
-              jobs={filteredJobs}
-              onStatusChange={updateJobStatus}
-              onDelete={deleteJob}
-            />
-          </>
+          <JobTable
+            jobs={filteredJobs}
+            onStatusChange={updateJobStatus}
+            onDelete={deleteJob}
+          />
         )}
       </main>
 
