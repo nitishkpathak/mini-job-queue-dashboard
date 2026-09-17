@@ -77,14 +77,14 @@ export default function StatusSummary({ counts, activeFilter, onSelectFilter }) 
             }`}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-slate-500 tracking-wide">
+              <span className="text-sm font-bold text-slate-600 tracking-wide">
                 {card.label}
               </span>
-              <div className={`p-1.5 rounded-lg border text-xs ${card.badgeBg}`}>
-                <Icon className="w-3.5 h-3.5" />
+              <div className={`p-2 rounded-xl border ${card.badgeBg}`}>
+                <Icon className="w-4 h-4" />
               </div>
             </div>
-            <div className={`text-2xl font-bold font-mono ${card.color}`}>
+            <div className={`text-3xl font-extrabold font-mono ${card.color}`}>
               {card.count}
             </div>
           </button>

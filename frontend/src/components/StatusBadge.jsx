@@ -32,10 +32,10 @@ export default function StatusBadge({ status }) {
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${config.badgeStyle}`}
+      className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-bold border ${config.badgeStyle}`}
     >
-      <span className="relative flex h-2 w-2">
-        <span className={`relative inline-flex rounded-full h-2 w-2 ${config.dotStyle}`}></span>
+      <span className="relative flex h-2.5 w-2.5">
+        <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${config.dotStyle}`}></span>
       </span>
       <span>{config.label}</span>
     </span>

@@ -78,11 +78,11 @@ export default function Dashboard() {
         />
 
         {/* Search & Select Filters */}
-        <div className="space-y-3">
+        <div className="space-y-3.5">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-2">
+            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
               <span>Task Execution Queue</span>
-              <span className="text-[11px] font-mono font-medium text-indigo-700 bg-indigo-50 border border-indigo-200 px-2 py-0.5 rounded-md">
+              <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-md">
                 {filteredJobs.length} {filteredJobs.length === 1 ? 'job' : 'jobs'}
               </span>
             </h2>

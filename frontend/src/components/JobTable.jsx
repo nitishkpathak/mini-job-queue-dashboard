@@ -21,13 +21,13 @@ export default function JobTable({ jobs, onStatusChange, onDelete }) {
     <div className="overflow-x-auto bg-white border border-slate-200 rounded-2xl shadow-sm mb-8">
       <table className="w-full text-left border-collapse min-w-[650px] sm:min-w-full">
         <thead>
-          <tr className="border-b border-slate-200 text-[11px] font-bold text-slate-600 uppercase tracking-wider bg-slate-50/90">
-            <th className="py-3.5 px-4 w-32">Job ID</th>
-            <th className="py-3.5 px-4">Title</th>
-            <th className="py-3.5 px-4 hidden sm:table-cell">Job Type</th>
-            <th className="py-3.5 px-4">Status</th>
-            <th className="py-3.5 px-4 hidden md:table-cell">Created At</th>
-            <th className="py-3.5 px-4 text-right">Actions</th>
+          <tr className="border-b border-slate-200 text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wider bg-slate-100/90">
+            <th className="py-4 px-5 w-36">Job ID</th>
+            <th className="py-4 px-5">Title</th>
+            <th className="py-4 px-5 hidden sm:table-cell">Job Type</th>
+            <th className="py-4 px-5">Status</th>
+            <th className="py-4 px-5 hidden md:table-cell">Created At</th>
+            <th className="py-4 px-5 text-right">Actions</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
