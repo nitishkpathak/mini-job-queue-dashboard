@@ -3,6 +3,7 @@ import {
   NotFoundException,
   BadRequestException,
   ConflictException,
+  OnModuleInit,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,11 +14,34 @@ import { UpdateJobStatusDto } from './dto/update-job-status.dto';
 import { ALLOWED_TRANSITIONS, JOB_MESSAGES } from './jobs.constants';
 
 @Injectable()
-export class JobsService {
+export class JobsService implements OnModuleInit {
   constructor(
     @InjectRepository(Job)
     private readonly jobRepository: Repository<Job>,
   ) {}
+
+  async onModuleInit() {
+    const count = await this.jobRepository.count();
+    if (count === 0) {
+      await this.jobRepository.save([
+        this.jobRepository.create({
+          title: 'Import Customer Records',
+          type: 'Data Import',
+          status: JobStatus.PENDING,
+        }),
+        this.jobRepository.create({
+          title: 'Generate Monthly Invoice PDF',
+          type: 'Report Generation',
+          status: JobStatus.RUNNING,
+        }),
+        this.jobRepository.create({
+          title: 'Sync Inventory Data',
+          type: 'Data Sync',
+          status: JobStatus.COMPLETED,
+        }),
+      ]);
+    }
+  }
 
   /**
    * Helper method to validate status transition rules
