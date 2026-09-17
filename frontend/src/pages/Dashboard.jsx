@@ -69,7 +69,7 @@ export default function Dashboard() {
       />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-6 sm:px-8 py-10 space-y-10">
         {/* Top Metric Cards */}
         <StatusSummary
           counts={counts}
@@ -78,11 +78,11 @@ export default function Dashboard() {
         />
 
         {/* Search & Select Filters */}
-        <div className="space-y-3.5">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+        <div className="space-y-4 pt-2">
+          <div className="flex items-center justify-between mb-1">
+            <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2.5">
               <span>Task Execution Queue</span>
-              <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 rounded-md">
+              <span className="text-xs font-mono font-bold text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-lg">
                 {filteredJobs.length} {filteredJobs.length === 1 ? 'job' : 'jobs'}
               </span>
             </h2>
@@ -90,9 +90,9 @@ export default function Dashboard() {
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="text-xs font-medium text-slate-500 hover:text-slate-800 flex items-center space-x-1 hover:underline transition"
+                className="text-xs sm:text-sm font-semibold text-slate-500 hover:text-slate-900 flex items-center space-x-1.5 hover:underline transition cursor-pointer"
               >
-                <RotateCcw className="w-3 h-3" />
+                <RotateCcw className="w-3.5 h-3.5" />
                 <span>Clear Filters</span>
               </button>
             )}

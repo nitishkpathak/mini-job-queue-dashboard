@@ -61,7 +61,7 @@ export default function StatusSummary({ counts, activeFilter, onSelectFilter }) 
   ];
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5 lg:gap-6 w-full">
       {cards.map((card) => {
         const isActive = activeFilter === card.id;
         const Icon = card.icon;
@@ -70,26 +70,26 @@ export default function StatusSummary({ counts, activeFilter, onSelectFilter }) 
           <button
             key={card.id}
             onClick={() => onSelectFilter(card.id)}
-            className={`p-4 rounded-2xl border bg-white text-left transition-all duration-200 flex flex-col justify-between shadow-sm hover:shadow-md cursor-pointer overflow-hidden ${
+            className={`p-5 md:p-6 rounded-2xl border bg-white text-left transition-all duration-200 flex flex-col justify-between shadow-sm hover:shadow-md cursor-pointer overflow-hidden ${
               isActive
                 ? `${card.activeBorder} ${card.accentTop} shadow-md`
                 : `${card.accentTop} border-slate-200 hover:border-slate-300`
             }`}
           >
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-4">
               <div>
                 <span className="text-xs font-bold text-slate-500 uppercase tracking-wider block">
                   {card.label}
                 </span>
-                <span className="text-[11px] font-medium text-slate-400 block mt-0.5">
+                <span className="text-xs font-medium text-slate-400 block mt-1">
                   {card.subtext}
                 </span>
               </div>
-              <div className={`p-2 rounded-xl border shrink-0 ${card.iconBg}`}>
+              <div className={`p-2.5 rounded-xl border shrink-0 ${card.iconBg}`}>
                 <Icon className="w-4 h-4" />
               </div>
             </div>
-            <div className={`text-3xl font-black font-mono tracking-tight ${card.color}`}>
+            <div className={`text-3xl sm:text-4xl font-black font-mono tracking-tight ${card.color}`}>
               {card.count}
             </div>
           </button>

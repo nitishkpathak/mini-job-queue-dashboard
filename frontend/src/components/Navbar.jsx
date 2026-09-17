@@ -3,8 +3,8 @@ import { RefreshCw, Plus, Layers } from 'lucide-react';
 
 export default function Navbar({ onOpenCreateModal, onRefresh, isRefreshing }) {
   return (
-    <header className="border-b border-slate-200 bg-white/90 backdrop-blur-md sticky top-0 z-30 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+    <header className="border-b border-slate-200/90 bg-white/95 backdrop-blur-md sticky top-0 z-30 shadow-xs">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-4.5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         {/* Title & Brand */}
         <div className="flex items-center space-x-3.5">
           <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-600 flex items-center justify-center shrink-0 shadow-sm">
