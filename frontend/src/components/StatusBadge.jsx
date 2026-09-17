@@ -1,43 +1,46 @@
 import React from 'react';
-import { Clock, Play, CheckCircle2, XCircle } from 'lucide-react';
 
 export default function StatusBadge({ status }) {
   const configs = {
     pending: {
       label: 'Pending',
-      style: 'bg-amber-950/60 text-amber-300 border-amber-800/60',
-      icon: Clock,
+      badgeStyle: 'bg-amber-950/40 text-amber-300 border-amber-800/50 shadow-sm shadow-amber-950/20',
+      dotStyle: 'bg-amber-400',
     },
     running: {
       label: 'Running',
-      style: 'bg-blue-950/60 text-blue-300 border-blue-800/60 animate-pulse',
-      icon: Play,
+      badgeStyle: 'bg-blue-950/50 text-blue-300 border-blue-700/60 shadow-sm shadow-blue-950/30',
+      dotStyle: 'bg-blue-400 animate-ping',
+      pulseDot: true,
     },
     completed: {
       label: 'Completed',
-      style: 'bg-emerald-950/60 text-emerald-300 border-emerald-800/60',
-      icon: CheckCircle2,
+      badgeStyle: 'bg-emerald-950/40 text-emerald-300 border-emerald-800/50 shadow-sm shadow-emerald-950/20',
+      dotStyle: 'bg-emerald-400',
     },
     failed: {
       label: 'Failed',
-      style: 'bg-rose-950/60 text-rose-300 border-rose-800/60',
-      icon: XCircle,
+      badgeStyle: 'bg-rose-950/40 text-rose-300 border-rose-800/50 shadow-sm shadow-rose-950/20',
+      dotStyle: 'bg-rose-400',
     },
   };
 
   const config = configs[status] || {
     label: status,
-    style: 'bg-slate-800 text-slate-300 border-slate-700',
-    icon: Clock,
+    badgeStyle: 'bg-slate-800 text-slate-300 border-slate-700',
+    dotStyle: 'bg-slate-400',
   };
-
-  const Icon = config.icon;
 
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.style}`}
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold border ${config.badgeStyle}`}
     >
-      <Icon className="w-3 h-3 shrink-0" />
+      <span className="relative flex h-2 w-2">
+        {config.pulseDot && (
+          <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${config.dotStyle}`}></span>
+        )}
+        <span className={`relative inline-flex rounded-full h-2 w-2 ${config.dotStyle}`}></span>
+      </span>
       <span>{config.label}</span>
     </span>
   );
