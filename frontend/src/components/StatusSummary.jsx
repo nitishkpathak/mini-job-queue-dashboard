@@ -81,7 +81,7 @@ export default function StatusSummary({ counts, activeFilter, onSelectFilter }) 
                 {card.label}
               </span>
               <div className={`p-1.5 rounded-lg border text-xs ${card.badgeBg}`}>
-                <Icon className={`w-3.5 h-3.5 ${card.id === 'running' && card.count > 0 ? 'animate-spin' : ''}`} />
+                <Icon className="w-3.5 h-3.5" />
               </div>
             </div>
             <div className={`text-2xl font-bold font-mono ${card.color}`}>

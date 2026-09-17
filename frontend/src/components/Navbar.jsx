@@ -19,14 +19,6 @@ export default function Navbar({ onOpenCreateModal, onRefresh, isRefreshing }) {
                 Mini Job Queue Dashboard
               </h1>
             </div>
-            <div className="flex items-center space-x-2 mt-0.5">
-              <span className="flex items-center text-[11px] text-slate-400">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block mr-1.5"></span>
-                Backend Live
-              </span>
-              <span className="text-slate-600">•</span>
-              <span className="text-[11px] text-slate-400 font-mono">SQLite + NestJS</span>
-            </div>
           </div>
         </div>
 

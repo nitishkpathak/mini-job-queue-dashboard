@@ -10,8 +10,7 @@ export default function StatusBadge({ status }) {
     running: {
       label: 'Running',
       badgeStyle: 'bg-blue-950/50 text-blue-300 border-blue-700/60 shadow-sm shadow-blue-950/30',
-      dotStyle: 'bg-blue-400 animate-ping',
-      pulseDot: true,
+      dotStyle: 'bg-blue-400',
     },
     completed: {
       label: 'Completed',
