@@ -1,74 +1,97 @@
 # Mini Job Queue Dashboard
 
-A full-stack Job Queue Management Dashboard built with **React.js** for the frontend and **NestJS** for the backend, utilizing **SQLite (TypeORM)** for persistence, strict state machine validation, and atomic concurrency handling.
+A full-stack Job Queue Management Dashboard built with **React.js** for the frontend and **NestJS** for the backend, using **SQLite (TypeORM)** for persistence, strict state machine validation, and atomic concurrency handling.
 
 ---
 
-## Overview
+## 📌 Submission Links
 
-The Mini Job Queue Dashboard allows users to create, filter, monitor, update, and delete asynchronous background jobs. It demonstrates real-world software engineering practices including state transition constraints, DTO payload validation, REST API design, and atomic concurrency controls to prevent race conditions when multiple users or tabs interact with the system simultaneously.
+- **GitHub Public Repository**: [https://github.com/nitishkpathak/mini-job-queue-dashboard](https://github.com/nitishkpathak/mini-job-queue-dashboard)
+- **Live Frontend URL**: [https://mini-job-queue-dashboard-gules.vercel.app](https://mini-job-queue-dashboard-gules.vercel.app)
+- **Live Backend API URL**: [https://mini-job-queue-dashboard-wfos.onrender.com](https://mini-job-queue-dashboard-wfos.onrender.com)
+- **Live Swagger API Documentation**: [https://mini-job-queue-dashboard-wfos.onrender.com/api/docs](https://mini-job-queue-dashboard-wfos.onrender.com/api/docs)
 
 ---
 
-## Architecture Flow
+## 📖 Overview
+
+The **Mini Job Queue Dashboard** allows engineering teams to create, monitor, filter, update, and delete asynchronous background jobs. 
+
+It is designed to demonstrate real-world full-stack development practices, including:
+1. **API Design & DTO Validation**: Sanitized RESTful endpoints built with NestJS and Class Validator.
+2. **Strict State Machine**: Enforced status transition flow (`pending` → `running` → `completed` | `failed`).
+3. **Atomic Concurrency Control**: Prevents race conditions when multiple users or browser tabs attempt to update the same job simultaneously.
+4. **Clean Restrained UI**: A dense, responsive developer tool interface built with React.js and Tailwind CSS.
+
+---
+
+## 🏗 System Architecture Flow
 
 ```text
-                  ┌──────────────────────┐
-                  │      React App       │
-                  │                      │
-                  │  Dashboard           │
-                  │  Job Form            │
-                  │  Filters             │
-                  │  Job Table           │
-                  │  Status Cards        │
-                  └──────────┬───────────┘
-                             │
-                          Axios
-                             │
-                             ▼
-                  ┌──────────────────────┐
-                  │     NestJS API       │
-                  │                      │
-                  │ JobsController       │
-                  │       ↓              │
-                  │ JobsService          │
-                  │       ↓              │
-                  │ Validation           │
-                  │ Status Transition    │
-                  │ Concurrency Control  │
-                  └──────────┬───────────┘
-                             │
-                             ▼
-                  ┌──────────────────────┐
-                  │ PostgreSQL / SQLite  │
-                  │                      │
-                  │       Jobs           │
-                  └──────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                      React.js Frontend                          │
+│                                                                 │
+│  • Dashboard Page               • Status Summary Pills          │
+│  • Search & Filter Bar          • Responsive Jobs Table         │
+│  • Create Job Modal             • Toast Notifications           │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │
+                            Axios HTTP
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      NestJS Backend API                         │
+│                                                                 │
+│  • JobsController (REST Endpoints & Swagger Annotations)        │
+│  • ValidationPipe (Payload sanitization & DTO validation)       │
+│  • HttpExceptionFilter (Standardized JSON error envelope)      │
+│  • JobsService (State Machine & Concurrency logic)              │
+└────────────────────────────────┬────────────────────────────────┘
+                                 │
+                           TypeORM Queries
+                                 │
+                                 ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                      SQLite Database                            │
+│                                                                 │
+│  • `jobs` Table (UUID id, title, type, status, createdAt)       │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Features
+## ✨ Key Features
 
-- **Real-Time Job Queue Management**: Create, list, filter, update status, and delete jobs.
-- **Strict State Machine**: Enforces valid status transitions (`pending` → `running` → `completed` | `failed`).
-- **Atomic Concurrency Safety**: Prevents race conditions using conditional SQL updates (`WHERE id = :id AND status = :expectedStatus`).
-- **Status Summary Cards**: Dynamic counters for `Total`, `Pending`, `Running`, `Completed`, and `Failed` jobs.
-- **Context-Aware Action Buttons**: UI dynamically shows allowed actions (e.g. `Start` for pending, `Complete`/`Fail` for running, disabled for terminal states).
-- **Interactive API Documentation**: Built-in Swagger UI at `/api/docs`.
-- **Global Error & Exception Handling**: Standardized API error envelopes (`400 Bad Request`, `409 Conflict`, `404 Not Found`).
-
----
-
-## Tech Stack
-
-- **Frontend**: React.js, Vite, Tailwind CSS, Lucide Icons, Axios.
-- **Backend**: NestJS, TypeScript, TypeORM, Class-Validator, Swagger OpenAPI.
-- **Database**: SQLite (local zero-config file database) / PostgreSQL compatible.
+- **Job Queue Management**: Create, view, list, filter by status or type, update status, and delete background jobs.
+- **Strict State Machine**: Backend-enforced valid transitions (`pending` → `running` → `completed` | `failed`). Terminal states (`completed` and `failed`) cannot be modified.
+- **Concurrency & Race Condition Safety**: Atomic conditional SQL queries (`UPDATE jobs SET status = :target WHERE id = :id AND status = :expected`) prevent concurrent state corruption across parallel requests.
+- **Real-Time Status Summary**: Live status counts for `Total`, `Pending`, `Running`, `Completed`, and `Failed` jobs.
+- **Context-Aware Action Buttons**: UI displays valid actions per state (`Run` for pending, `Complete`/`Fail` for running, disabled text for terminal states).
+- **Interactive Swagger Documentation**: Live OpenAPI documentation UI at `/api/docs`.
+- **Global Error Handling**: Standardized JSON error response envelope (`statusCode`, `timestamp`, `path`, `method`, `message`).
 
 ---
 
-## Project Structure
+## 🛠 Tech Stack
+
+### Frontend
+- **Framework**: React.js (v18) with Vite
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **HTTP Client**: Axios
+
+### Backend
+- **Framework**: NestJS (v10) with TypeScript
+- **Database ORM**: TypeORM with SQLite3
+- **Validation**: `class-validator` & `class-transformer`
+- **Documentation**: Swagger OpenAPI (`@nestjs/swagger`)
+
+### Database
+- **SQLite**: Local zero-configuration file database (`backend/data/jobs.sqlite`).
+
+---
+
+## 📂 Project Structure
 
 ```text
 mini-job-queue-dashboard/
@@ -79,26 +102,20 @@ mini-job-queue-dashboard/
 │   │   │   ├── dto/
 │   │   │   │   ├── create-job.dto.ts
 │   │   │   │   └── update-job-status.dto.ts
-│   │   │   │
 │   │   │   ├── entities/
 │   │   │   │   └── job.entity.ts
-│   │   │   │
 │   │   │   ├── jobs.controller.ts
 │   │   │   ├── jobs.service.ts
 │   │   │   ├── jobs.module.ts
 │   │   │   └── jobs.constants.ts
-│   │   │
 │   │   ├── common/
 │   │   │   ├── enums/
 │   │   │   │   └── job-status.enum.ts
 │   │   │   ├── filters/
 │   │   │   │   └── http-exception.filter.ts
 │   │   │   └── exceptions/
-│   │   │
 │   │   ├── app.module.ts
 │   │   └── main.ts
-│   │
-│   ├── test/
 │   ├── .env
 │   ├── .env.example
 │   ├── package.json
@@ -108,31 +125,26 @@ mini-job-queue-dashboard/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── Navbar.jsx
-│   │   │   ├── JobForm.jsx
+│   │   │   ├── StatusSummary.jsx
+│   │   │   ├── StatusFilter.jsx
 │   │   │   ├── JobTable.jsx
 │   │   │   ├── JobRow.jsx
-│   │   │   ├── StatusFilter.jsx
 │   │   │   ├── StatusBadge.jsx
-│   │   │   ├── StatusCards.jsx
+│   │   │   ├── JobForm.jsx
 │   │   │   ├── Loading.jsx
-│   │   │   └── ErrorMessage.jsx
-│   │   │
+│   │   │   ├── ErrorMessage.jsx
+│   │   │   └── NotificationToast.jsx
 │   │   ├── pages/
 │   │   │   └── Dashboard.jsx
-│   │   │
 │   │   ├── services/
 │   │   │   └── jobApi.js
-│   │   │
 │   │   ├── hooks/
 │   │   │   └── useJobs.js
-│   │   │
 │   │   ├── utils/
 │   │   │   └── jobUtils.js
-│   │   │
 │   │   ├── App.jsx
 │   │   ├── main.jsx
 │   │   └── index.css
-│   │
 │   ├── .env
 │   ├── .env.example
 │   ├── package.json
@@ -145,11 +157,62 @@ mini-job-queue-dashboard/
 
 ---
 
-## API Documentation
+## 🔄 Status Transition Rules
 
-Interactive Swagger API specs are available at **`http://localhost:3001/api/docs`**.
+Job statuses follow a strict state machine:
 
-### POST /jobs
+```text
+             ┌──→ completed
+pending → running
+             └──→ failed
+```
+
+### Transition Rules
+1. `pending` $\rightarrow$ `running`: Allowed.
+2. `running` $\rightarrow$ `completed`: Allowed.
+3. `running` $\rightarrow$ `failed`: Allowed.
+4. `completed` $\rightarrow$ Anything else: **Forbidden** (Terminal State).
+5. `failed` $\rightarrow$ Anything else: **Forbidden** (Terminal State).
+6. Direct transition from `pending` to `completed` or `failed` is **Forbidden** (must pass through `running`).
+
+---
+
+## ⚡ Concurrency & Race Condition Handling
+
+### Scenario
+Two browser tabs are open simultaneously. Both display a job in `pending` status. Both users click **Run** (`pending` $\rightarrow$ `running`) at almost the exact same millisecond.
+
+### Key Questions & Engineering Solutions
+
+#### 1. Where should this rule be enforced?
+Enforced **at the NestJS Backend Service and Database layer**. The backend acts as the authoritative single source of truth. While the React frontend hides invalid action buttons for usability, security and data integrity rely 100% on backend validation.
+
+#### 2. What happens if someone bypasses the React application and calls the API directly?
+All requests pass through NestJS `ValidationPipe` and `JobsService.validateStatusTransition()`. If someone sends a direct HTTP request (via Postman or Curl) attempting an invalid transition (e.g. `completed` $\rightarrow$ `running`), the backend rejects it with `400 Bad Request`.
+
+#### 3. What happens when two requests arrive at nearly the same time?
+Both requests compete to transition the same `pending` job to `running`. Without concurrency protection, both requests might pass in-memory checks and cause duplicate task processing or corrupted state.
+
+#### 4. How would you prevent an invalid or inconsistent state?
+We prevent race conditions using an **Atomic Conditional SQL Update**:
+
+```sql
+UPDATE jobs 
+SET status = 'running' 
+WHERE id = :id AND status = 'pending';
+```
+
+- **Request 1**: Executes the query. The row is modified (`affected === 1`). Transition succeeds (`200 OK`).
+- **Request 2**: Executes the query milliseconds later. Because status is now `'running'`, the condition `status = 'pending'` matches 0 rows (`affected === 0`).
+- The NestJS service detects `affected === 0` and throws a `409 Conflict` exception (`"Concurrent update detected"`). This guarantees database state consistency without needing complex distributed locking mechanisms.
+
+---
+
+## 📑 API Documentation
+
+Interactive Swagger OpenAPI documentation is available at **`http://localhost:3001/api/docs`** (Local) and **`https://mini-job-queue-dashboard-wfos.onrender.com/api/docs`** (Live).
+
+### 1. POST /jobs
 Creates a new job in the queue. Default status is `pending`.
 
 - **Request Body**:
@@ -166,14 +229,14 @@ Creates a new job in the queue. Default status is `pending`.
     "title": "Process Monthly PDF Invoices",
     "type": "DOCUMENT_PROCESSING",
     "status": "pending",
-    "createdAt": "2026-09-15T16:09:12.000Z"
+    "createdAt": "2026-09-17T09:00:00.000Z"
   }
   ```
 
-### GET /jobs
-Retrieves all jobs, with optional filtering by status query parameter.
+### 2. GET /jobs
+Retrieves all jobs ordered by newest first.
 
-- **Query Parameters**: `status` (optional: `pending` | `running` | `completed` | `failed`)
+- **Query Parameters**: `status` (optional: `pending`, `running`, `completed`, `failed`)
 - **Response (200 OK)**:
   ```json
   [
@@ -182,13 +245,27 @@ Retrieves all jobs, with optional filtering by status query parameter.
       "title": "Process Monthly PDF Invoices",
       "type": "DOCUMENT_PROCESSING",
       "status": "pending",
-      "createdAt": "2026-09-15T16:09:12.000Z"
+      "createdAt": "2026-09-17T09:00:00.000Z"
     }
   ]
   ```
 
-### PATCH /jobs/:id/status
-Updates the status of a specific job adhering to state transition rules.
+### 3. GET /jobs/counts
+Retrieves aggregated status counts summary.
+
+- **Response (200 OK)**:
+  ```json
+  {
+    "total": 4,
+    "pending": 1,
+    "running": 1,
+    "completed": 1,
+    "failed": 1
+  }
+  ```
+
+### 4. PATCH /jobs/:id/status
+Updates job status following state transition rules.
 
 - **Request Body**:
   ```json
@@ -200,91 +277,57 @@ Updates the status of a specific job adhering to state transition rules.
   ```json
   {
     "id": "c9dd0f54-75a5-4460-b933-ca6224cb509e",
-    "status": "running"
+    "title": "Process Monthly PDF Invoices",
+    "type": "DOCUMENT_PROCESSING",
+    "status": "running",
+    "createdAt": "2026-09-17T09:00:00.000Z"
   }
   ```
-- **Error Response (400 Bad Request)**: Returned when attempting forbidden transitions (e.g. `completed` → `running`).
+- **Error Response (400 Bad Request)**:
+  ```json
+  {
+    "statusCode": 400,
+    "timestamp": "2026-09-17T09:05:00.000Z",
+    "path": "/jobs/c9dd0f54-75a5-4460-b933-ca6224cb509e/status",
+    "method": "PATCH",
+    "message": "Invalid status transition from 'completed' to 'running'. Allowed transitions from 'completed': []"
+  }
+  ```
 
-### DELETE /jobs/:id
-Deletes a job from the database by ID.
+### 5. DELETE /jobs/:id
+Deletes a job by ID.
 
 - **Response (200 OK)**:
   ```json
   {
-    "message": "Job with ID \"c9dd0f54-75a5-4460-b933-ca6224cb509e\" has been deleted successfully"
+    "message": "Job \"Process Monthly PDF Invoices\" deleted successfully"
   }
   ```
 
 ---
 
-## Database Schema
+## 🗄 Database Schema
 
 ### `jobs` Table
-| Column | Data Type | Constraint | Description |
+| Column | Data Type | Constraints | Description |
 | :--- | :--- | :--- | :--- |
-| `id` | `UUID` | Primary Key, Generated | Unique identifier |
-| `title` | `VARCHAR(100)` | NOT NULL | Title of the job |
-| `type` | `VARCHAR(50)` | NOT NULL | Type of job processing |
-| `status` | `ENUM` | Default `'pending'` | Values: `pending`, `running`, `completed`, `failed` |
-| `createdAt` | `TIMESTAMP` | Auto-Generated | Record creation timestamp |
+| `id` | `UUID` | Primary Key, Auto-Generated | Unique job identifier |
+| `title` | `VARCHAR(100)` | NOT NULL | Title of the job task |
+| `type` | `VARCHAR(50)` | NOT NULL | Category / type of job |
+| `status` | `TEXT` | Default `'pending'` | Enum: `pending`, `running`, `completed`, `failed` |
+| `createdAt` | `TIMESTAMP` | Auto-Generated | Creation timestamp |
 
 ---
 
-## Status Transition Rules
+## 🔍 Validation & Error Handling
 
-State transitions strictly follow this state machine diagram:
-
-```text
-             ┌──→ completed
-pending → running
-             └──→ failed
-```
-
-- `pending` $\rightarrow$ `running`
-- `running` $\rightarrow$ `completed`
-- `running` $\rightarrow$ `failed`
-- `completed` & `failed` are **terminal states** and cannot transition to any other status.
-- Direct transition from `pending` to `completed` or `failed` is forbidden.
+- **Class Validator**: Payload attributes are validated via decorators (`@IsNotEmpty`, `@IsString`, `@IsEnum`, `@MaxLength`).
+- **Sanitization**: NestJS global `ValidationPipe` with `whitelist: true` and `forbidNonWhitelisted: true` rejects unexpected fields (e.g. `name`, `email`, `password`).
+- **Exception Filter**: Global `HttpExceptionFilter` formats errors into standard JSON structures (`statusCode`, `timestamp`, `path`, `method`, `message`), preventing raw stack traces from leaking to clients.
 
 ---
 
-## Concurrency Handling
-
-### Scenario
-Two browser tabs are open simultaneously. Both display a job in `pending` state and both users click **Start (Running)** at almost the exact same millisecond.
-
-### Solution & Mechanism
-1. **NestJS Service Logic (`validateStatusTransition`)**: Checks valid state transition rule in-memory before executing queries.
-2. **Atomic Conditional Update**:
-   ```sql
-   UPDATE jobs 
-   SET status = 'running' 
-   WHERE id = :id AND status = 'pending';
-   ```
-3. **Outcome**:
-   - **Request 1**: Executes SQL query. Rows affected = 1. Returns `200 OK`.
-   - **Request 2**: Executes SQL query. Because Request 1 changed status to `'running'`, WHERE condition `status = 'pending'` matches 0 rows. Rows affected = 0.
-   - `JobsService` detects `affected === 0` and throws a `409 Conflict` exception ("Concurrent update detected").
-
----
-
-## Validation & Error Handling
-
-- **DTO Validation**: `CreateJobDto` and `UpdateJobStatusDto` validate inputs using `class-validator` (`@IsNotEmpty`, `@IsString`, `@IsEnum`).
-- **Global Exception Filter**: `HttpExceptionFilter` intercepts exceptions and standardizes responses:
-  ```json
-  {
-    "statusCode": 400,
-    "timestamp": "2026-09-15T16:15:00.000Z",
-    "path": "/jobs/123/status",
-    "method": "PATCH",
-    "message": "Invalid status transition from 'completed' to 'running'."
-  }
-  ```
-
----
-
-## Environment Variables
+## ⚙️ Environment Variables
 
 ### Backend (`backend/.env`)
 ```env
@@ -300,74 +343,49 @@ VITE_API_URL=http://localhost:3001
 
 ---
 
-## Local Setup
+## 🚀 Local Setup Instructions
 
 ### Prerequisites
-- Node.js (v18+)
-- npm (v9+)
+- **Node.js**: v18+
+- **npm**: v9+
 
-### Backend
+### 1. Backend Setup
 ```bash
 cd backend
 npm install
 npm run build
 npm run start
 ```
-Runs at: **`http://localhost:3001`**
+- Backend REST API: **`http://localhost:3001`**
+- Swagger API Docs: **`http://localhost:3001/api/docs`**
 
-### Frontend
-In a new terminal tab:
+### 2. Frontend Setup
+In a separate terminal tab:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
-Runs at: **`http://localhost:3000`**
+- Dashboard UI: **`http://localhost:3000`**
 
 ---
 
-## Deployment
+## 💡 Assumptions & Trade-offs
 
-- **Backend**: Can be deployed to Render, Railway, or Fly.io using Node.js runtime.
-- **Frontend**: Can be deployed to Vercel, Netlify, or Cloudflare Pages pointing `VITE_API_URL` to the deployed backend URL.
-
----
-
-## Assumptions
-
-- Jobs are triggered manually or by client actions via REST API.
-- SQLite is sufficient for local development and single-node deployment (can swap to PostgreSQL via TypeORM config for distributed production).
+1. **SQLite for Local Persistence**: SQLite is chosen for zero-config file persistence during local evaluation. On free cloud deployment containers (like Render Free Tier), containers spin down after inactivity, resetting local temporary disk files on container restart.
+2. **Short Polling**: Client state auto-refreshes periodically (every 10s) and after mutations. WebSockets would be added for push updates in high-volume production.
+3. **No Auth Requirements**: Per assignment scope, endpoints are unauthenticated for easy evaluator testing.
 
 ---
 
-## Trade-offs
+## 🚀 Production Improvements
 
-- SQLite database file locks on heavy parallel writes; PostgreSQL would be used for high-concurrency production deployments.
-- Short polling / periodic refresh (10s) used on frontend; WebSockets / SSE could be added for instant push updates across tabs.
-
----
-
-## Production Improvements
-
-1. **WebSockets (Socket.IO)**: Broadcast status changes to all open browser tabs in real time.
-2. **Background Job Queue (BullMQ + Redis)**: Asynchronously process background worker tasks with retry policies and rate limiting.
-3. **Database Migration Scripts**: TypeORM migrations for production database schema versioning.
+1. **WebSockets (Socket.IO)**: Broadcast status changes to all open browser tabs in real-time with zero latency.
+2. **Background Worker Queues (BullMQ + Redis)**: Process asynchronous worker tasks in background queues with automatic retries, exponential backoff, and rate limiting.
+3. **Database Migration Scripts**: TypeORM migration files for production schema versioning and safe database deployments.
 
 ---
 
-## Screenshots
+## 📜 License
 
-*(Include screenshots of Dashboard, Status Cards, Filters, Job Table, and Create Modal here)*
-
----
-
-## Live Demo
-
-- **Frontend**: `http://localhost:3000`
-- **Backend API Docs**: `http://localhost:3001/api/docs`
-
----
-
-## GitHub Repository
-
-Public Repository Link: `https://github.com/your-username/mini-job-queue-dashboard`
+MIT License - free to use for evaluation and education.
