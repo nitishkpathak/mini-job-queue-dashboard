@@ -54,27 +54,27 @@ export default function JobForm({ onSubmit, onCancel }) {
       )}
 
       <div>
-        <label className="block text-xs font-medium text-slate-300 mb-1">
-          Job Title <span className="text-rose-400">*</span>
+        <label className="block text-xs font-semibold text-slate-700 mb-1">
+          Job Title <span className="text-rose-500">*</span>
         </label>
         <input
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="e.g. Generate Monthly PDF Report"
-          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+          className="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/10 transition shadow-sm"
           autoFocus
         />
       </div>
 
       <div>
-        <label className="block text-xs font-medium text-slate-300 mb-1">
-          Job Type <span className="text-rose-400">*</span>
+        <label className="block text-xs font-semibold text-slate-700 mb-1">
+          Job Type <span className="text-rose-500">*</span>
         </label>
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition mb-2"
+          className="w-full bg-white border border-slate-300 rounded-xl px-4 py-2.5 text-sm text-slate-900 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/10 transition mb-2.5 shadow-sm"
         >
           {PRESET_TYPES.map((t) => (
             <option key={t} value={t}>
@@ -90,7 +90,7 @@ export default function JobForm({ onSubmit, onCancel }) {
             value={customType}
             onChange={(e) => setCustomType(e.target.value)}
             placeholder="Enter custom type"
-            className="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+            className="w-full bg-white border border-slate-300 rounded-xl px-4 py-2 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500/10 transition shadow-sm"
           />
         )}
       </div>
@@ -100,7 +100,7 @@ export default function JobForm({ onSubmit, onCancel }) {
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 text-xs font-medium text-slate-400 hover:text-white rounded-xl transition"
+            className="px-4 py-2.5 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition"
           >
             Cancel
           </button>
